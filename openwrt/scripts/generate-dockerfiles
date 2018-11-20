@@ -4,6 +4,13 @@ openwrt_version="$1"
 openwrt_target="$2"
 openwrt_subtarget="$3"
 
+
+if [ ${openwrt_version} = "snapshot" ]; then
+	revision=$(date +"%x %X")
+else
+	revision=${openwrt_version}
+fi
+
 template_imagebuilder_base="
 ########################################################################
 # WARNING: This is an automatically generated Dockerfile. DO NOT EDIT. #
@@ -21,7 +28,7 @@ RUN mkdir -p /buildsystem/build && \\\\
  mkdir -p /builder/packages/ && \\\\ 
  echo -n \\\"{\\\\\\\"platform\\\\\\\": \\\\\\\"lede\\\\\\\", \\\" > /builder/packages/metadata && \\\\
  echo -n \\\"\\\\\\\"architecture\\\\\\\": \\\\\\\"\${openwrt_target}_\${openwrt_subtarget}\\\\\\\", \\\" >> /builder/packages/metadata && \\\\
- echo -n \\\"\\\\\\\"version\\\\\\\": \\\\\\\"\${openwrt_version}\\\\\\\", \\\" >> /builder/packages/metadata && \\\\
+ echo -n \\\"\\\\\\\"version\\\\\\\": \\\\\\\"\${revision}\\\\\\\", \\\" >> /builder/packages/metadata && \\\\
  echo -n \\\"\\\\\\\"packages\\\\\\\": \\\" >> /builder/packages/metadata && \\\\
  cd /builder/imagebuilder && \\\\
  make package_index && \\\\
