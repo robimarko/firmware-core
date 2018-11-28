@@ -3,6 +3,7 @@
 openwrt_version="$1"
 openwrt_target="$2"
 openwrt_subtarget="$3"
+parallel_build="$4"
 work_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." && pwd )
 platform_dir="${work_dir}/openwrt"
 build_dir="${work_dir}/build"
@@ -22,7 +23,7 @@ fi
 base_url="https://downloads.openwrt.org"
 
 # Set the target specific URL
-if [ "$1" != "snapshot" ]; then
+if [ "${openwrt_version}" != "snapshot" ]; then
 	target_url="${base_url}/releases/${openwrt_version}/targets/${openwrt_target}/${openwrt_subtarget}"
 else
 	target_url="${base_url}/snapshots/targets/${openwrt_target}/${openwrt_subtarget}"
@@ -106,7 +107,12 @@ make defconfig
 make download V=s
 
 # Starting building
-make V=s
+# Use parallel build if passed as argument
+if [ -z "${parallel_build}" ]; then
+	make -j${parallel_build} V=s
+else
+	make V=s
+fi
 
 # Copy built packages to the imagebuilder
 cd ${build_dir}
