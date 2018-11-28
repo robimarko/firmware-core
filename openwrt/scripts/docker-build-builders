@@ -10,3 +10,4 @@ echo "Creating runtime Docker container for ${openwrt_version} ${openwrt_target}
 
 docker run --rm otvorenamreza/openwrt-imagebuilder-base:${openwrt_version}_${openwrt_target}_${openwrt_subtarget} 2>/dev/null | \
 docker build --rm --force-rm -t otvorenamreza/openwrt-builder:${openwrt_version}_${openwrt_target}_${openwrt_subtarget} - >/dev/null 2>/dev/null
+echo "If succesfull image will be tagged as otvorenamreza/openwrt-builder:${openwrt_version}_${openwrt_target}_${openwrt_subtarget}"
