@@ -11,6 +11,7 @@ nodewatcher-agent-mod-keys_ssh
 nodewatcher-agent-mod-clients
 nodewatcher-agent-mod-http_push
 nodewatcher-agent-mod-routing_babel
+nodewatcher-agent-mod-meshpoint
 nodewatcher-watchdog
 nodeupgrade
 identity-pubkey
